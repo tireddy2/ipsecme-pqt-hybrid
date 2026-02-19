@@ -9,19 +9,19 @@ number:
 date:
 consensus: true
 v: 3
-area: sec
-workgroup: ipsecme
+area: "Security"
+workgroup: "IP Security Maintenance and Extensions"
 keyword:
  - Post-Quantum
  - Hybrid Authentication
  - IKEv2
 venue:
-  group: WG
-  type: Working Group
-  mail: ipsec@ietf.org
-  arch: https://mailarchive.ietf.org/arch/browse/ipsec/
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  group: "IP Security Maintenance and Extensions"
+  type: "Working Group"
+  mail: "ipsec@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/ipsec/"
+  github: "tireddy2/ipsecme-pqt-hybrid"
+  latest: "https://tireddy2.github.io/ipsecme-pqt-hybrid/draft-reddy-ipsecme-pqt-hybrid-auth.html"
 
 author:
  -
@@ -73,10 +73,10 @@ The mechanisms specified in this document provide a general framework for combin
 
 The following two deployment models are specified:
 
-1. Composite Certificate:  
+1. Composite Certificate:
    A single certificate containing a composite public key and composite signature, as defined in {{I-D.ietf-lamps-pq-composite-sigs}}. In this model, a single certificate chain and a single AUTH payload are used to provide hybrid authentication assurance.
 
-2. Dual Certificates:  
+2. Dual Certificates:
    One certificate containing a traditional public key and one certificate containing a PQC public key. This model exemplifies a PQ/T hybrid protocol with non-composite authentication, as defined in {{Section 4 of RFC9794}}. In this approach, two independent single-algorithm certificate chains are used in parallel, each validated according to standard PKIX procedures. Both certificates are conveyed during the IKE_AUTH exchange, and each corresponding signature is computed over the IKEv2 signed octets defined in Section 2.15 of {{RFC7296}}. Consequently, both authentications are cryptographically bound to the same IKE SA without requiring modifications to the X.509 certificate format.
 
 
@@ -121,7 +121,7 @@ HDR, SK {IDi, CERT+, [CERTREQ,]
 
 # Composite Certificate
 
-This draft extends and complements {{!PQC-AUTH=I-D.ipsecme-ikev2-pqc-auth}} which defines how to use Post-Quantum Cryptographic (PQC) signature algorithms (such as ML-DSA and SLH-DSA) in IKEv2 authentication. Both drafts share the same overarching goal: 
+This draft extends and complements {{!PQC-AUTH=I-D.ipsecme-ikev2-pqc-auth}} which defines how to use Post-Quantum Cryptographic (PQC) signature algorithms (such as ML-DSA and SLH-DSA) in IKEv2 authentication. Both drafts share the same overarching goal:
 
 Enable IKEv2 to authenticate peers using PQC signature algorithms, ensuring security against quantum-capable adversaries.
 
@@ -133,9 +133,9 @@ Both drafts:
 * Rely on the standard IKEv2 AUTH payload format {{RFC7296}}.
 * Use SUPPORTED_AUTH_METHODS ({{RFC9593}}). In this case, the IKev2 peers use the SUPPORTED_AUTH_METHODS notification to advertise supported composite signature algorithms.
 
-IKEv2 can use arbitrary signature algorithms as described in {{RFC7427}}, where the "Digital Signature" authentication method replaces older signature authentication methods. Both standalone PQC signature algorithms and composite signature algorithms can be incorporated using the "Signature Algorithm" field in the AUTH payload, as defined in {{!RFC7427}}. 
+IKEv2 can use arbitrary signature algorithms as described in {{RFC7427}}, where the "Digital Signature" authentication method replaces older signature authentication methods. Both standalone PQC signature algorithms and composite signature algorithms can be incorporated using the "Signature Algorithm" field in the AUTH payload, as defined in {{!RFC7427}}.
 
-For composite signatures, a single AlgorithmIdentifier describes a composite public key and a composite signature that combines multiple constituent algorithms (e.g., a traditional and a PQC algorithm) in accordance with {{I-D.ietf-lamps-pq-composite-sigs}}. This allows a single certificate and AUTH payload to provide hybrid assurance without requiring multiple exchanges. 
+For composite signatures, a single AlgorithmIdentifier describes a composite public key and a composite signature that combines multiple constituent algorithms (e.g., a traditional and a PQC algorithm) in accordance with {{I-D.ietf-lamps-pq-composite-sigs}}. This allows a single certificate and AUTH payload to provide hybrid assurance without requiring multiple exchanges.
 
 AlgorithmIdentifier ASN.1 objects are used to uniquely identify composite schemes, including the full parameter set for each constituent algorithm. This ensures unambiguous selection and verification of composite signature during authentication.
 
@@ -172,8 +172,8 @@ Each party MUST validate both authentication rounds. If either round fails, the 
 
 ## Example Flow
 
-- IKE_SA_INIT: ECDH exchange, MULTIPLE_AUTH_SUPPORTED  
-- IKE_SA_INTERMEDIATE: ML-KEM exchange  
+- IKE_SA_INIT: ECDH exchange, MULTIPLE_AUTH_SUPPORTED
+- IKE_SA_INTERMEDIATE: ML-KEM exchange
 - First IKE_AUTH: traditional CERT, traditional AUTH, ANOTHER_AUTH_FOLLOWS
 - Second IKE_AUTH: PQC CERT, PQC AUTH
 
