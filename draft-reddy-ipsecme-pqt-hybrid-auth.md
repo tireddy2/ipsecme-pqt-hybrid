@@ -3,7 +3,7 @@ title: "Hybrid Post-Quantum and Traditional Authentication for IKEv2"
 abbrev: "IKEv2 PQ/T Hybrid Auth"
 category: std
 
-docname: draft-reddy-ipsecme-pqt-hybrid-auth
+docname: draft-reddy-ipsecme-pqt-hybrid-auth-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
