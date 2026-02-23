@@ -213,14 +213,15 @@ For dual certificates, there is currently no mechanism addressing it.
 Any such mechanism needs to address the current issues (backwards compatibility to conventional certificates vs possible mandatory support for dual).
 In addition, it would be ideal if it is somewhat generalizable, with the hope that it might be useful to address future requirements.
 Furthermore, it should not be so complex to make it difficult to understand, to describe or to implement.
-
+In addition, I do not believe for it to be appropriate for this document to take a strong stand about the category of any specific algorithm (whether or not it is 'postquantum')
+'
 Here is one plausible way to do that:
 
-1. For each algorithm listed in the supported auth method announcement, we somehow tag it with a general type.  For example, RSA might get the type 0 (which an implementation might use to describe a conventional algorithm), while ML-DSA-87 might be tagged as type 1 (which might be used to describe a PQ algorithms)
+1. For each algorithm listed in the supported auth method announcement, we somehow tag it with a general type.  For example, RSA might get the type 0 (which an implementation might use to describe a conventional algorithm), while ML-DSA-87 might be tagged as type 1 (which might be used to describe a PQ algorithm).
 
-2. In addition, there is a separate list of allowable combinations.  For example, a device in the process of being upgraded might list either "0" (conventional only is acceptable) or "0+1" (conventional plus postquantum is allowed).  A device after the network has been upgraded might list "0+1" (dual certificates) as the only allowable option.
+2. In addition, there is a separate list of allowable combinations.  For example, a device in the process of being upgraded might list either "0" (conventional only is acceptable) or "0+1" (conventional plus postquantum is allowed).  A device after the network has been upgraded might list "0+1" (dual certificates, including a conventional certificate and an PQ certificate) as the only allowable option.  An even later transition (deprecating conventional certificates) might list "0+1" or "1" as allowable combinations.
 
-Of course, were we to do that, the method of tagging the algorithms, plus the method of listing the allowable combintations, would need to be specified.
+Of course, were we to use this approach, the method of tagging the algorithms, plus the method of listing the allowable combintations, would need to be specified.
 
 # Security Considerations
 
