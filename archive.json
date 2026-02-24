@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-22T01:46:29.040591+00:00",
+  "timestamp": "2026-02-24T01:44:52.239409+00:00",
   "repo": "tireddy2/ipsecme-pqt-hybrid",
   "labels": [
     {
@@ -50,5 +50,32 @@
     }
   ],
   "issues": [],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDORTz9HM7Fr3QF",
+      "title": "Add negotiation section",
+      "url": "https://github.com/tireddy2/ipsecme-pqt-hybrid/pull/1",
+      "state": "OPEN",
+      "author": "sfluhrer",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I added a section talking about the issues around negotiation, and outlined a possible solution for dual certificates.\r\n\r\nOf course, this is only a proposal (and only half-done - the actual data formats would need to be specified); feel free to do with it what you want",
+      "createdAt": "2026-02-23T15:55:29Z",
+      "updatedAt": "2026-02-23T17:03:15Z",
+      "baseRepository": "tireddy2/ipsecme-pqt-hybrid",
+      "baseRefName": "main",
+      "baseRefOid": "ba55fb9678e330e47bc4f054cb860454b58e4fdf",
+      "headRepository": "sfluhrer/ipsecme-pqt-hybrid",
+      "headRefName": "patch-1",
+      "headRefOid": "694fd8f4e98b5d1b3ee4060e79408f0f449433e9",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
 }
