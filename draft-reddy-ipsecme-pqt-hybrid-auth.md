@@ -31,6 +31,11 @@ author:
     region: Karnataka
     country: India
     email: "k.tirumaleswar_reddy@nokia.com"
+-
+    ins: S. Fluhrer
+    name: Scott Fluhrer
+    org: Cisco Systems
+    email: sfluhrer@cisco.com
 
 normative:
   I-D.ietf-lamps-pq-composite-sigs:
@@ -188,6 +193,35 @@ Deployments should ensure that the selected traditional and PQC algorithms provi
 # IKEv2 Fragmentation
 
 Post-quantum signature algorithms and certificate chains may significantly increase the size of IKE_AUTH messages. Implementations supporting the mechanisms defined in this document MUST support IKEv2 Fragmentation as defined in {{RFC7383}}.
+
+# Negotiation
+
+Note: currently, this section talks mostly about the problems that we'll need to addressed.
+Eventually, it'll be updated to talk about the actual mechanism, including the bits-on-the-wire format.
+
+To support brown field upgrades, we will need for an IKE device to be able to support negotiating with devices with only conventional (e.g. RSA) certificates, and with devices with hybrid or dual certificates (e.g. RSA and ML-DSA).
+In addition, for the network to be entire postquantum safe, devices will need to be able to mandate that hybrid or dual certificates be used.
+Furthermore, it would be cleaner if the device sent its policy upfront to the peer, rather than letting it try to negotiate and failing.
+
+For hybrid certificates, this is straight-forward.  A hybrid certificate can be listed in the SUPPORTED_AUTH_METHODS list as yet another algorithm.
+A device can decide to list support for both that and RSA, or it could decide to list only support for hybrid certificates.
+The existing mechanism in IKE will cleanly decide which is appropriate.
+The only remaining issue is one of preference (if we have multiple algorithm OIDs that are acceptable to the peer, which one should we use).
+This is not a security issue; instead, it is a performance issue (preferring hybrid would allow us to find performance problems earlier).
+
+For dual certificates, there is currently no mechanism addressing it.
+Any such mechanism needs to address the current issues (backwards compatibility to conventional certificates vs possible mandatory support for dual).
+In addition, it would be ideal if it is somewhat generalizable, with the hope that it might be useful to address future requirements.
+Furthermore, it should not be so complex to make it difficult to understand, to describe or to implement.
+In addition, I do not believe for it to be appropriate for this document to take a strong stand about the category of any specific algorithm (whether or not it is 'postquantum')
+'
+Here is one plausible way to do that:
+
+1. For each algorithm listed in the supported auth method announcement, we somehow tag it with a general type.  For example, RSA might get the type 0 (which an implementation might use to describe a conventional algorithm), while ML-DSA-87 might be tagged as type 1 (which might be used to describe a PQ algorithm).
+
+2. In addition, there is a separate list of allowable combinations.  For example, a device in the process of being upgraded might list either "0" (conventional only is acceptable) or "0+1" (conventional plus postquantum is allowed).  A device after the network has been upgraded might list "0+1" (dual certificates, including a conventional certificate and an PQ certificate) as the only allowable option.  An even later transition (deprecating conventional certificates) might list "0+1" or "1" as allowable combinations.
+
+Of course, were we to use this approach, the method of tagging the algorithms, plus the method of listing the allowable combintations, would need to be specified.
 
 # Security Considerations
 
