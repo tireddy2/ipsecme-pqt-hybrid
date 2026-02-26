@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-24T01:44:52.239409+00:00",
+  "timestamp": "2026-02-26T01:43:39.246973+00:00",
   "repo": "tireddy2/ipsecme-pqt-hybrid",
   "labels": [
     {
@@ -56,26 +56,42 @@
       "id": "PR_kwDORTz9HM7Fr3QF",
       "title": "Add negotiation section",
       "url": "https://github.com/tireddy2/ipsecme-pqt-hybrid/pull/1",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "sfluhrer",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "I added a section talking about the issues around negotiation, and outlined a possible solution for dual certificates.\r\n\r\nOf course, this is only a proposal (and only half-done - the actual data formats would need to be specified); feel free to do with it what you want",
       "createdAt": "2026-02-23T15:55:29Z",
-      "updatedAt": "2026-02-23T17:03:15Z",
+      "updatedAt": "2026-02-24T06:54:41Z",
       "baseRepository": "tireddy2/ipsecme-pqt-hybrid",
       "baseRefName": "main",
       "baseRefOid": "ba55fb9678e330e47bc4f054cb860454b58e4fdf",
       "headRepository": "sfluhrer/ipsecme-pqt-hybrid",
       "headRefName": "patch-1",
       "headRefOid": "694fd8f4e98b5d1b3ee4060e79408f0f449433e9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-24T06:54:41Z",
+      "mergedAt": "2026-02-24T06:54:41Z",
+      "mergedBy": "tireddy2",
+      "mergeCommit": {
+        "oid": "98625ae3d56769ed9ad60dd323b0c0afddd89066"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDORTz9HM7lNqdL",
+          "commit": {
+            "abbreviatedOid": "694fd8f"
+          },
+          "author": "tireddy2",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "Looks good to initiate a discussion in the WG. ",
+          "createdAt": "2026-02-24T06:54:24Z",
+          "updatedAt": "2026-02-24T06:54:24Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
