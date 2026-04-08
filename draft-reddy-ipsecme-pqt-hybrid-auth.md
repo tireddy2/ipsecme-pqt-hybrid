@@ -190,6 +190,12 @@ Both authentication rounds defined in {{RFC4739}} MUST succeed. Failure to valid
 
 Deployments should ensure that the selected traditional and PQC algorithms provide comparable security strength to avoid unintended weakening of the overall authentication assurance.
 
+In the dual-certificate mode defined in this document, the multiple authentication exchanges specified in {{RFC4739}} are used to provide two independent cryptographic assurances for a single IKE identity within one IKE SA.
+
+Accordingly, both authentication rounds MUST assert the same identity as defined by the IDi or IDr payloads in {{RFC7296}}. The identity information conveyed in the second authentication exchange MUST be identical to that conveyed in the first authentication exchange for the same party.
+
+If the identities asserted in the two authentication rounds differ, the IKE_SA negotiation MUST fail.
+
 # IKEv2 Fragmentation
 
 Post-quantum signature algorithms and certificate chains may significantly increase the size of IKE_AUTH messages. Implementations supporting the mechanisms defined in this document MUST support IKEv2 Fragmentation as defined in {{RFC7383}}.
