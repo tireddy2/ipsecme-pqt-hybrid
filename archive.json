@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-07T01:57:28.474003+00:00",
+  "timestamp": "2026-04-09T01:50:08.037650+00:00",
   "repo": "tireddy2/ipsecme-pqt-hybrid",
   "labels": [
     {
@@ -98,24 +98,26 @@
       "id": "PR_kwDORTz9HM7GjCpG",
       "title": "Identity match for dual certificates",
       "url": "https://github.com/tireddy2/ipsecme-pqt-hybrid/pull/2",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "tireddy2",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-02-26T13:36:51Z",
-      "updatedAt": "2026-02-26T15:13:30Z",
+      "updatedAt": "2026-04-08T13:54:15Z",
       "baseRepository": "tireddy2/ipsecme-pqt-hybrid",
       "baseRefName": "main",
       "baseRefOid": "98625ae3d56769ed9ad60dd323b0c0afddd89066",
       "headRepository": "tireddy2/ipsecme-pqt-hybrid",
       "headRefName": "tireddy2-patch-1",
       "headRefOid": "58125497d902a9a087cddde4f749efe7d89ad00b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-04-08T13:54:15Z",
+      "mergedAt": "2026-04-08T13:54:15Z",
+      "mergedBy": "tireddy2",
+      "mergeCommit": {
+        "oid": "050c888a794d810a7530546a530251e88c73394a"
+      },
       "comments": [
         {
           "author": "tireddy2",
@@ -144,6 +146,59 @@
           "body": "",
           "createdAt": "2026-02-26T15:13:30Z",
           "updatedAt": "2026-02-26T15:13:30Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDORTz9HM7Q1vzZ",
+      "title": "Remove text discussing dual certificates",
+      "url": "https://github.com/tireddy2/ipsecme-pqt-hybrid/pull/3",
+      "state": "OPEN",
+      "author": "tireddy2",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-04-08T14:38:53Z",
+      "updatedAt": "2026-04-08T17:53:53Z",
+      "baseRepository": "tireddy2/ipsecme-pqt-hybrid",
+      "baseRefName": "main",
+      "baseRefOid": "050c888a794d810a7530546a530251e88c73394a",
+      "headRepository": "tireddy2/ipsecme-pqt-hybrid",
+      "headRefName": "tireddy2-patch-2",
+      "headRefOid": "3a966ba4a6307af8b84a964f7d9b6558a5fc75bd",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDORTz9HM7y9qfN",
+          "commit": {
+            "abbreviatedOid": "3a966ba"
+          },
+          "author": "smyslov",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "I think this is the right way to go. ",
+          "createdAt": "2026-04-08T15:23:54Z",
+          "updatedAt": "2026-04-08T15:23:54Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDORTz9HM7zBCrp",
+          "commit": {
+            "abbreviatedOid": "3a966ba"
+          },
+          "author": "sfluhrer",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-08T17:53:53Z",
+          "updatedAt": "2026-04-08T17:53:53Z",
           "comments": []
         }
       ]
