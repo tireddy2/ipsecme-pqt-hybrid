@@ -2,14 +2,15 @@
 
 
 
-ipsecme                                                         T. Reddy
+IP Security Maintenance and Extensions                          T. Reddy
 Internet-Draft                                                     Nokia
-Intended status: Standards Track                        19 February 2026
-Expires: 23 August 2026
+Intended status: Standards Track                              S. Fluhrer
+Expires: 11 October 2026                                   Cisco Systems
+                                                            9 April 2026
 
 
       Hybrid Post-Quantum and Traditional Authentication for IKEv2
-                  draft-reddy-ipsecme-pqt-hybrid-auth
+               draft-reddy-ipsecme-pqt-hybrid-auth-latest
 
 Abstract
 
@@ -18,27 +19,29 @@ Abstract
    typically used for authentication in IKEv2.  Combining the post-
    quantum ML-DSA signature algorithm with a traditional signature
    algorithm provides protection against potential weaknesses or
-   implementation flaws in ML-DSA.  This draft defines hybrid PKI
-   authentication methods for IKEv2 that ensure that authentication
-   remains secure as long as at least one of the component signature
-   algorithms remains unbroken.
+   implementation flaws in ML-DSA.  This draft defines a hybrid PKI
+   authentication method for IKEv2 using composite certificates that
+   ensures authentication remains secure as long as at least one of the
+   component signature algorithms remains unbroken.
 
 About This Document
 
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://example.com/LATEST.  Status information for this document may
-   be found at https://datatracker.ietf.org/doc/draft-reddy-ipsecme-pqt-
-   hybrid/.
+   https://tireddy2.github.io/ipsecme-pqt-hybrid/draft-reddy-ipsecme-
+   pqt-hybrid-auth.html.  Status information for this document may be
+   found at https://datatracker.ietf.org/doc/draft-reddy-ipsecme-pqt-
+   hybrid-auth/.
 
-   Discussion of this document takes place on the WG Working Group
-   mailing list (mailto:ipsec@ietf.org), which is archived at
+   Discussion of this document takes place on the IP Security
+   Maintenance and Extensions Working Group mailing list
+   (mailto:ipsec@ietf.org), which is archived at
    https://mailarchive.ietf.org/arch/browse/ipsec/.  Subscribe at
    https://www.ietf.org/mailman/listinfo/ipsec/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/USER/REPO.
+   https://github.com/tireddy2/ipsecme-pqt-hybrid.
 
 Status of This Memo
 
@@ -55,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 August 2026.
+   This Internet-Draft will expire on 11 October 2026.
 
 Copyright Notice
 
@@ -79,10 +82,8 @@ Table of Contents
    4.  Exchanges
    5.  Composite Certificate
      5.1.  Composite Certificate Processing
-   6.  Dual Certificate Hybrid Authentication
-     6.1.  Example Flow
-     6.2.  Certificate Validation
-   7.  IKEv2 Fragmentation
+   6.  IKEv2 Fragmentation
+   7.  Negotiation
    8.  Security Considerations
      8.1.  Downgrade Considerations
    9.  IANA Considerations
@@ -90,7 +91,7 @@ Table of Contents
      10.1.  Normative References
      10.2.  Informative References
    Acknowledgments
-   Author's Address
+   Authors' Addresses
 
 1.  Introduction
 
@@ -112,40 +113,27 @@ Table of Contents
    such that a successful forgery requires breaking each of the
    component signature algorithms used in the hybrid construction.
 
-   This document defines hybrid authentication mechanisms for IKEv2 that
-   combine traditional and post-quantum (PQC) signature algorithms.  The
-   security objective of these mechanisms is that authentication remains
-   secure as long as at least one of the component signature algorithms
-   in the hybrid construction remains secure against forgery.
+   This document defines a hybrid authentication mechanism for IKEv2
+   that combines traditional and post-quantum (PQC) signature algorithms
+   using composite certificates.  The security objective of this
+   mechanism is that authentication remains secure as long as at least
+   one of the component signature algorithms in the hybrid construction
+   remains secure against forgery.
 
-   The mechanisms specified in this document provide a general framework
+   The mechanism specified in this document provides a general framework
    for combining PQC and traditional signature algorithms in IKEv2.
    Although this document primarily describes combinations involving ML-
    DSA [ML-DSA] variants and traditional algorithms, the framework is
    not limited to ML-DSA and can accommodate other PQC and traditional
    signature algorithm combinations.
 
-   The following two deployment models are specified:
+   The deployment model specified is:
 
-   1.  Composite Certificate:
-       A single certificate containing a composite public key and
-       composite signature, as defined in
-       [I-D.ietf-lamps-pq-composite-sigs].  In this model, a single
-       certificate chain and a single AUTH payload are used to provide
-       hybrid authentication assurance.
-
-   2.  Dual Certificates:
-       One certificate containing a traditional public key and one
-       certificate containing a PQC public key.  This model exemplifies
-       a PQ/T hybrid protocol with non-composite authentication, as
-       defined in Section 4 of [RFC9794].  In this approach, two
-       independent single-algorithm certificate chains are used in
-       parallel, each validated according to standard PKIX procedures.
-       Both certificates are conveyed during the IKE_AUTH exchange, and
-       each corresponding signature is computed over the IKEv2 signed
-       octets defined in Section 2.15 of [RFC7296].  Consequently, both
-       authentications are cryptographically bound to the same IKE SA
-       without requiring modifications to the X.509 certificate format.
+   Composite Certificate: A single certificate containing a composite
+   public key and composite signature, as defined in
+   [I-D.ietf-lamps-pq-composite-sigs].  In this model, a single
+   certificate chain and a single AUTH payload are used to provide
+   hybrid authentication assurance.
 
 2.  Conventions and Definitions
 
@@ -221,7 +209,7 @@ Table of Contents
 
    *  Rely on the standard IKEv2 AUTH payload format [RFC7296].
 
-   *  Use SUPPORTED_AUTH_METHODS ([RFC9593]).  In this case, the IKev2
+   *  Use SUPPORTED_AUTH_METHODS ([RFC9593]).  In this case, the IKEv2
       peers use the SUPPORTED_AUTH_METHODS notification to advertise
       supported composite signature algorithms.
 
@@ -264,92 +252,50 @@ Table of Contents
    [I-D.ietf-lamps-pq-composite-sigs].  Any internal hashing or message
    preprocessing is performed as specified by that document.
 
-6.  Dual Certificate Hybrid Authentication
-
-   This section describes how this draft leverages the mechanisms
-   defined in [RFC4739] to enable PQ/T hybrid authentication in IKEv2.
-
-   When using dual certificates, each peer performs multiple rounds of
-   authentication as specified in [RFC4739]:
-
-   *  During capability negotiation, each peer indicates support for
-      multiple authentications by including the MULTIPLE_AUTH_SUPPORTED
-      notification in the initial key exchange.
-
-   *  During the first IKE_AUTH exchange, the ANOTHER_AUTH_FOLLOWS
-      notification is included to indicate that a subsequent
-      authentication round will follow.
-
-   The authentication process is as follows:
-
-   1.  First IKE_AUTH exchange
-
-       *  Uses the traditional certificate and signature.
-
-       *  Includes the ANOTHER_AUTH_FOLLOWS notification to signal that
-          another authentication will occur.
-
-   2.  Second IKE_AUTH exchange
-
-       *  Uses the PQC certificate and signature.
-
-       *  This completes the dual certificate authentication process.
-
-   Both authentication exchanges compute the AUTH payload as defined in
-   Section 2.15 of [RFC7296], as specified by [RFC4739].  Each signature
-   binds the peer’s identity to the IKE SA transcript.  If one or more
-   IKE_SA_INTERMEDIATE exchanges occurred, the signed octets are
-   constructed as specified in [RFC9242].  Since both authentication
-   rounds occur within the same IKE SA and both must succeed, the
-   resulting IKE SA is authenticated only if both signatures are valid.
-
-   Each party MUST validate both authentication rounds.  If either round
-   fails, the IKE SA negotiation MUST fail.
-
-6.1.  Example Flow
-
-   *  IKE_SA_INIT: ECDH exchange, MULTIPLE_AUTH_SUPPORTED
-
-   *  IKE_SA_INTERMEDIATE: ML-KEM exchange
-
-   *  First IKE_AUTH: traditional CERT, traditional AUTH,
-      ANOTHER_AUTH_FOLLOWS
-
-   *  Second IKE_AUTH: PQC CERT, PQC AUTH
-
-6.2.  Certificate Validation
-
-   When dual certificate authentication is used, each certificate chain
-   is validated according to the applicable PKIX procedures as defined
-   in [RFC7296].
-
-   Both authentication rounds defined in [RFC4739] MUST succeed.
-   Failure to validate either certificate chain or failure to verify
-   either corresponding AUTH payload signature MUST cause the IKE_SA
-   negotiation to fail.
-
-   Deployments should ensure that the selected traditional and PQC
-   algorithms provide comparable security strength to avoid unintended
-   weakening of the overall authentication assurance.
-
-7.  IKEv2 Fragmentation
+6.  IKEv2 Fragmentation
 
    Post-quantum signature algorithms and certificate chains may
    significantly increase the size of IKE_AUTH messages.
    Implementations supporting the mechanisms defined in this document
    MUST support IKEv2 Fragmentation as defined in [RFC7383].
 
+7.  Negotiation
+
+   Note: currently, this section talks mostly about the problems that
+   we'll need to address.  Eventually, it'll be updated to talk about
+   the actual mechanism, including the bits-on-the-wire format.
+
+   To support brown field upgrades, we will need for an IKE device to be
+   able to support negotiating with devices with only conventional (e.g.
+   RSA) certificates, and with devices with composite certificates (e.g.
+   RSA and ML-DSA).  In addition, for the network to be entirely post-
+   quantum safe, devices will need to be able to mandate that composite
+   certificates be used.  Furthermore, it would be cleaner if the device
+   sent its policy upfront to the peer, rather than letting it try to
+   negotiate and failing.
+
+   For composite certificates, this is straight-forward.  A composite
+   certificate can be listed in the SUPPORTED_AUTH_METHODS list as yet
+   another algorithm.  A device can decide to list support for both that
+   and RSA, or it could decide to list only support for composite
+   certificates.  The existing mechanism in IKE will cleanly decide
+   which is appropriate.  The only remaining issue is one of preference
+   (if we have multiple algorithm OIDs that are acceptable to the peer,
+   which one should we use).  This is not a security issue; instead, it
+   is a performance issue (preferring composite would allow us to find
+   performance problems earlier).
+
 8.  Security Considerations
 
-   The hybrid mechanisms defined in this document aim to provide
+   The hybrid mechanism defined in this document aims to provide
    authentication security as long as at least one component signature
    algorithm remains secure against forgery.
 
    The security of general PQ/T hybrid authentication is discussed in
    [RFC9794].  This document relies on mechanisms defined in
-   [I-D.ietf-lamps-pq-composite-sigs], [RFC7427], [RFC9593], and
-   [RFC4739], and the security considerations of those specifications
-   need to be taken into account.
+   [I-D.ietf-lamps-pq-composite-sigs], [RFC7427], and [RFC9593], and the
+   security considerations of those specifications need to be taken into
+   account.
 
    Traditional signature algorithms such as ECDSA, Ed25519, and Ed448
    provide existential unforgeability under chosen-message attack (EUF-
@@ -374,27 +320,17 @@ Table of Contents
    The AUTH computation in IKEv2 signs the IKE_SA_INIT exchange as
    specified in Section 2.15 of [RFC7296].  Therefore, negotiation
    signals exchanged during IKE_SA_INIT (such as SUPPORTED_AUTH_METHODS
-   [RFC9593] or MULTIPLE_AUTH_SUPPORTED [RFC4739]) are cryptographically
-   bound to the authentication exchange and cannot be modified by an
-   active attacker without causing authentication failure.
+   [RFC9593]) are cryptographically bound to the authentication exchange
+   and cannot be modified by an active attacker without causing
+   authentication failure.
 
    If hybrid authentication is required by local policy, implementations
    MUST enforce that the negotiated authentication method satisfies that
    policy.
 
-   Specifically:
-
-   *  If composite authentication is required, receipt of a non-
-      composite certificate or non-composite signature algorithm during
-      IKE_AUTH MUST cause the IKE_SA negotiation to fail.
-
-   *  If dual certificate authentication is required:
-
-      -  Both authentication rounds defined in [RFC4739] MUST complete
-         successfully.
-
-      -  Failure of either authentication round MUST cause the IKE_SA
-         negotiation to fail.
+   Specifically, if composite authentication is required, receipt of a
+   non-composite certificate or non-composite signature algorithm during
+   IKE_AUTH MUST cause the IKE_SA negotiation to fail.
 
 9.  IANA Considerations
 
@@ -406,23 +342,24 @@ Table of Contents
 
    [I-D.ietf-lamps-pq-composite-sigs]
               Ounsworth, M., Gray, J., Pala, M., Klaußner, J., and S.
-              Fluhrer, "Composite ML-DSA for use in X.509 Public Key
+              Fluhrer, "Composite Module-Lattice-Based Digital Signature
+              Algorithm (ML-DSA) for use in X.509 Public Key
               Infrastructure", Work in Progress, Internet-Draft, draft-
-              ietf-lamps-pq-composite-sigs-14, 7 January 2026,
+              ietf-lamps-pq-composite-sigs-16, 8 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-lamps-
-              pq-composite-sigs-14>.
+              pq-composite-sigs-16>.
 
-   [PQC-AUTH] "*** BROKEN REFERENCE ***".
+   [PQC-AUTH] Reddy.K, T., Smyslov, V., and S. Fluhrer, "Signature
+              Authentication in the Internet Key Exchange Version 2
+              (IKEv2) using PQC", Work in Progress, Internet-Draft,
+              draft-ietf-ipsecme-ikev2-pqc-auth-07, 1 April 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-ipsecme-
+              ikev2-pqc-auth-07>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
-
-   [RFC4739]  Eronen, P. and J. Korhonen, "Multiple Authentication
-              Exchanges in the Internet Key Exchange (IKEv2) Protocol",
-              RFC 4739, DOI 10.17487/RFC4739, November 2006,
-              <https://www.rfc-editor.org/rfc/rfc4739>.
 
    [RFC7296]  Kaufman, C., Hoffman, P., Nir, Y., Eronen, P., and T.
               Kivinen, "Internet Key Exchange Protocol Version 2
@@ -468,7 +405,7 @@ Acknowledgments
 
    TODO acknowledge.
 
-Author's Address
+Authors' Addresses
 
    Tirumaleswar Reddy
    Nokia
@@ -476,3 +413,8 @@ Author's Address
    Karnataka
    India
    Email: k.tirumaleswar_reddy@nokia.com
+
+
+   Scott Fluhrer
+   Cisco Systems
+   Email: sfluhrer@cisco.com

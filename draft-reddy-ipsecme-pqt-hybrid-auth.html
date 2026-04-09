@@ -6,27 +6,28 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>Hybrid Post-Quantum and Traditional Authentication for IKEv2</title>
 <meta content="Tirumaleswar Reddy" name="author">
+<meta content="Scott Fluhrer" name="author">
 <meta content="
-       A Cryptographically Relevant Quantum Computer (CRQC) can break traditional public-key algorithms (e.g., RSA, ECDSA), which are typically used for authentication in IKEv2. Combining the post-quantum ML-DSA signature algorithm with a traditional signature algorithm provides protection against potential weaknesses or implementation flaws in ML-DSA. This draft defines hybrid PKI authentication methods for IKEv2 that ensure that authentication remains secure as long as at least one of the component signature algorithms remains unbroken. 
+       A Cryptographically Relevant Quantum Computer (CRQC) can break traditional public-key algorithms (e.g., RSA, ECDSA), which are typically used for authentication in IKEv2. Combining the post-quantum ML-DSA signature algorithm with a traditional signature algorithm provides protection against potential weaknesses or implementation flaws in ML-DSA. This draft defines a hybrid PKI authentication method for IKEv2 using composite certificates that ensures authentication remains secure as long as at least one of the component signature algorithms remains unbroken. 
     " name="description">
-<meta content="xml2rfc 3.31.0" name="generator">
+<meta content="xml2rfc 3.32.0" name="generator">
 <meta content="Post-Quantum" name="keyword">
 <meta content="Hybrid Authentication" name="keyword">
 <meta content="IKEv2" name="keyword">
-<meta content="draft-reddy-ipsecme-pqt-hybrid-auth" name="ietf.draft">
+<meta content="draft-reddy-ipsecme-pqt-hybrid-auth-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.31.0
+  xml2rfc 3.32.0
     Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.0.2
-    platformdirs 4.5.1
+    platformdirs 4.9.4
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.32.5
-    wcwidth 0.3.0
+    wcwidth 0.6.0
 -->
 <link href="draft-reddy-ipsecme-pqt-hybrid-auth.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1047,11 +1048,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">IKEv2 PQ/T Hybrid Auth</td>
-<td class="right">February 2026</td>
+<td class="right">April 2026</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Reddy</td>
-<td class="center">Expires 23 August 2026</td>
+<td class="left">Reddy &amp; Fluhrer</td>
+<td class="center">Expires 11 October 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1059,22 +1060,26 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">ipsecme</dd>
+<dd class="workgroup">IP Security Maintenance and Extensions</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-reddy-ipsecme-pqt-hybrid-auth</dd>
+<dd class="internet-draft">draft-reddy-ipsecme-pqt-hybrid-auth-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-19" class="published">19 February 2026</time>
+<time datetime="2026-04-09" class="published">9 April 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-23">23 August 2026</time></dd>
-<dt class="label-authors">Author:</dt>
+<dd class="expires"><time datetime="2026-10-11">11 October 2026</time></dd>
+<dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
       <div class="author-name">T. Reddy</div>
 <div class="org">Nokia</div>
+</div>
+<div class="author">
+      <div class="author-name">S. Fluhrer</div>
+<div class="org">Cisco Systems</div>
 </div>
 </dd>
 </dl>
@@ -1082,7 +1087,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Hybrid Post-Quantum and Traditional Authentication for IKEv2</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">A Cryptographically Relevant Quantum Computer (CRQC) can break traditional public-key algorithms (e.g., RSA, ECDSA), which are typically used for authentication in IKEv2. Combining the post-quantum ML-DSA signature algorithm with a traditional signature algorithm provides protection against potential weaknesses or implementation flaws in ML-DSA. This draft defines hybrid PKI authentication methods for IKEv2 that ensure that authentication remains secure as long as at least one of the component signature algorithms remains unbroken.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">A Cryptographically Relevant Quantum Computer (CRQC) can break traditional public-key algorithms (e.g., RSA, ECDSA), which are typically used for authentication in IKEv2. Combining the post-quantum ML-DSA signature algorithm with a traditional signature algorithm provides protection against potential weaknesses or implementation flaws in ML-DSA. This draft defines a hybrid PKI authentication method for IKEv2 using composite certificates that ensures authentication remains secure as long as at least one of the component signature algorithms remains unbroken.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1090,15 +1095,15 @@ svg :is([fill="white"], [fill^="#fff"]) {
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://example.com/LATEST">https://example.com/LATEST</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-reddy-ipsecme-pqt-hybrid/">https://datatracker.ietf.org/doc/draft-reddy-ipsecme-pqt-hybrid/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+        The latest revision of this draft can be found at <span><a href="https://tireddy2.github.io/ipsecme-pqt-hybrid/draft-reddy-ipsecme-pqt-hybrid-auth.html">https://tireddy2.github.io/ipsecme-pqt-hybrid/draft-reddy-ipsecme-pqt-hybrid-auth.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-reddy-ipsecme-pqt-hybrid-auth/">https://datatracker.ietf.org/doc/draft-reddy-ipsecme-pqt-hybrid-auth/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
-        WG Working Group mailing list (<span><a href="mailto:ipsec@ietf.org">mailto:ipsec@ietf.org</a></span>),
+        IP Security Maintenance and Extensions Working Group mailing list (<span><a href="mailto:ipsec@ietf.org">mailto:ipsec@ietf.org</a></span>),
         which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/ipsec/">https://mailarchive.ietf.org/arch/browse/ipsec/</a></span>.
         Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/ipsec/">https://www.ietf.org/mailman/listinfo/ipsec/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 <p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/USER/REPO">https://github.com/USER/REPO</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+        <span><a href="https://github.com/tireddy2/ipsecme-pqt-hybrid">https://github.com/tireddy2/ipsecme-pqt-hybrid</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1119,7 +1124,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 23 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 11 October 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1169,18 +1174,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-dual-certificate-hybrid-aut" class="internal xref">Dual Certificate Hybrid Authentication</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-example-flow" class="internal xref">Example Flow</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
-                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-certificate-validation" class="internal xref">Certificate Validation</a></p>
-</li>
-            </ul>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-ikev2-fragmentation" class="internal xref">IKEv2 Fragmentation</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-ikev2-fragmentation" class="internal xref">IKEv2 Fragmentation</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-negotiation" class="internal xref">Negotiation</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
@@ -1208,7 +1205,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.11.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1222,19 +1219,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-1-1">The advent of quantum computing poses a significant threat to current cryptographic systems. Traditional cryptographic algorithms such as RSA, Diffie-Hellman, DSA, and their elliptic curve variants are vulnerable to quantum attacks. During the transition to post-quantum cryptography (PQC), uncertainty remains regarding the long-term security of both traditional and PQC algorithms. Hybrid approaches allow deployments to mitigate risk during this transition period.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Unlike previous migrations between cryptographic algorithms, the decision of when to migrate and which algorithms to adopt is far from straightforward. Even after the migration period, it may be advantageous for an entity's cryptographic identity to incorporate multiple public-key algorithms to enhance security.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">Cautious implementers may opt to combine cryptographic algorithms such that a successful forgery requires breaking each of the component signature algorithms used in the hybrid construction.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">This document defines hybrid authentication mechanisms for IKEv2 that combine traditional and post-quantum (PQC) signature algorithms. The security objective of these mechanisms is that authentication remains secure as long as at least one of the component signature algorithms in the hybrid construction remains secure against forgery.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">The mechanisms specified in this document provide a general framework for combining PQC and traditional signature algorithms in IKEv2. Although this document primarily describes combinations involving ML-DSA <span>[<a href="#ML-DSA" class="cite xref">ML-DSA</a>]</span> variants and traditional algorithms, the framework is not limited to ML-DSA and can accommodate other PQC and traditional signature algorithm combinations.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">The following two deployment models are specified:<a href="#section-1-6" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-1-7">
-<li id="section-1-7.1">
-          <p id="section-1-7.1.1">Composite Certificate:<br>
-A single certificate containing a composite public key and composite signature, as defined in <span>[<a href="#I-D.ietf-lamps-pq-composite-sigs" class="cite xref">I-D.ietf-lamps-pq-composite-sigs</a>]</span>. In this model, a single certificate chain and a single AUTH payload are used to provide hybrid authentication assurance.<a href="#section-1-7.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li id="section-1-7.2">
-          <p id="section-1-7.2.1">Dual Certificates:<br>
-One certificate containing a traditional public key and one certificate containing a PQC public key. This model exemplifies a PQ/T hybrid protocol with non-composite authentication, as defined in <span><a href="https://rfc-editor.org/rfc/rfc9794#section-4" class="relref">Section 4</a> of [<a href="#RFC9794" class="cite xref">RFC9794</a>]</span>. In this approach, two independent single-algorithm certificate chains are used in parallel, each validated according to standard PKIX procedures. Both certificates are conveyed during the IKE_AUTH exchange, and each corresponding signature is computed over the IKEv2 signed octets defined in Section 2.15 of <span>[<a href="#RFC7296" class="cite xref">RFC7296</a>]</span>. Consequently, both authentications are cryptographically bound to the same IKE SA without requiring modifications to the X.509 certificate format.<a href="#section-1-7.2.1" class="pilcrow">¶</a></p>
-</li>
-      </ol>
+<p id="section-1-4">This document defines a hybrid authentication mechanism for IKEv2 that combines traditional and post-quantum (PQC) signature algorithms using composite certificates. The security objective of this mechanism is that authentication remains secure as long as at least one of the component signature algorithms in the hybrid construction remains secure against forgery.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">The mechanism specified in this document provides a general framework for combining PQC and traditional signature algorithms in IKEv2. Although this document primarily describes combinations involving ML-DSA <span>[<a href="#ML-DSA" class="cite xref">ML-DSA</a>]</span> variants and traditional algorithms, the framework is not limited to ML-DSA and can accommodate other PQC and traditional signature algorithm combinations.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">The deployment model specified is:<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">Composite Certificate:
+   A single certificate containing a composite public key and composite signature, as defined in <span>[<a href="#I-D.ietf-lamps-pq-composite-sigs" class="cite xref">I-D.ietf-lamps-pq-composite-sigs</a>]</span>. In this model, a single certificate chain and a single AUTH payload are used to provide hybrid authentication assurance.<a href="#section-1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1310,7 +1299,7 @@ HDR, SK {IDi, CERT+, [CERTREQ,]
           <p id="section-5-5.2.1">Rely on the standard IKEv2 AUTH payload format <span>[<a href="#RFC7296" class="cite xref">RFC7296</a>]</span>.<a href="#section-5-5.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-5.3">
-          <p id="section-5-5.3.1">Use SUPPORTED_AUTH_METHODS (<span>[<a href="#RFC9593" class="cite xref">RFC9593</a>]</span>). In this case, the IKev2 peers use the SUPPORTED_AUTH_METHODS notification to advertise supported composite signature algorithms.<a href="#section-5-5.3.1" class="pilcrow">¶</a></p>
+          <p id="section-5-5.3.1">Use SUPPORTED_AUTH_METHODS (<span>[<a href="#RFC9593" class="cite xref">RFC9593</a>]</span>). In this case, the IKEv2 peers use the SUPPORTED_AUTH_METHODS notification to advertise supported composite signature algorithms.<a href="#section-5-5.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-5-6">IKEv2 can use arbitrary signature algorithms as described in <span>[<a href="#RFC7427" class="cite xref">RFC7427</a>]</span>, where the "Digital Signature" authentication method replaces older signature authentication methods. Both standalone PQC signature algorithms and composite signature algorithms can be incorporated using the "Signature Algorithm" field in the AUTH payload, as defined in <span>[<a href="#RFC7427" class="cite xref">RFC7427</a>]</span>.<a href="#section-5-6" class="pilcrow">¶</a></p>
@@ -1328,87 +1317,29 @@ HDR, SK {IDi, CERT+, [CERTREQ,]
 </div>
 </section>
 </div>
-<div id="dual-certificate-hybrid-authentication">
-<section id="section-6">
-      <h2 id="name-dual-certificate-hybrid-aut">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-dual-certificate-hybrid-aut" class="section-name selfRef">Dual Certificate Hybrid Authentication</a>
-      </h2>
-<p id="section-6-1">This section describes how this draft leverages the mechanisms defined in <span>[<a href="#RFC4739" class="cite xref">RFC4739</a>]</span> to enable PQ/T hybrid authentication in IKEv2.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">When using dual certificates, each peer performs multiple rounds of authentication as specified in <span>[<a href="#RFC4739" class="cite xref">RFC4739</a>]</span>:<a href="#section-6-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-6-3.1">
-          <p id="section-6-3.1.1">During capability negotiation, each peer indicates support for multiple authentications by including the MULTIPLE_AUTH_SUPPORTED notification in the initial key exchange.<a href="#section-6-3.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="section-6-3.2">
-          <p id="section-6-3.2.1">During the first IKE_AUTH exchange, the ANOTHER_AUTH_FOLLOWS notification is included to indicate that a subsequent authentication round will follow.<a href="#section-6-3.2.1" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="section-6-4">The authentication process is as follows:<a href="#section-6-4" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-6-5">
-<li id="section-6-5.1">
-          <p id="section-6-5.1.1">First IKE_AUTH exchange<a href="#section-6-5.1.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-6-5.1.2.1">
-              <p id="section-6-5.1.2.1.1">Uses the traditional certificate and signature.<a href="#section-6-5.1.2.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-6-5.1.2.2">
-              <p id="section-6-5.1.2.2.1">Includes the ANOTHER_AUTH_FOLLOWS notification to signal that another authentication will occur.<a href="#section-6-5.1.2.2.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-</li>
-        <li id="section-6-5.2">
-          <p id="section-6-5.2.1">Second IKE_AUTH exchange<a href="#section-6-5.2.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-6-5.2.2.1">
-              <p id="section-6-5.2.2.1.1">Uses the PQC certificate and signature.<a href="#section-6-5.2.2.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-6-5.2.2.2">
-              <p id="section-6-5.2.2.2.1">This completes the dual certificate authentication process.<a href="#section-6-5.2.2.2.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-</li>
-      </ol>
-<p id="section-6-6">Both authentication exchanges compute the AUTH payload as defined in Section 2.15 of <span>[<a href="#RFC7296" class="cite xref">RFC7296</a>]</span>, as specified by <span>[<a href="#RFC4739" class="cite xref">RFC4739</a>]</span>. Each signature binds the peer’s identity to the IKE SA transcript. If one or more IKE_SA_INTERMEDIATE exchanges occurred, the signed octets are constructed as specified in <span>[<a href="#RFC9242" class="cite xref">RFC9242</a>]</span>. Since both authentication rounds occur within the same IKE SA and both must succeed, the resulting IKE SA is authenticated only if both signatures are valid.<a href="#section-6-6" class="pilcrow">¶</a></p>
-<p id="section-6-7">Each party <span class="bcp14">MUST</span> validate both authentication rounds. If either round fails, the IKE SA negotiation <span class="bcp14">MUST</span> fail.<a href="#section-6-7" class="pilcrow">¶</a></p>
-<div id="example-flow">
-<section id="section-6.1">
-        <h3 id="name-example-flow">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-example-flow" class="section-name selfRef">Example Flow</a>
-        </h3>
-<ul class="normal">
-<li class="normal" id="section-6.1-1.1">
-            <p id="section-6.1-1.1.1">IKE_SA_INIT: ECDH exchange, MULTIPLE_AUTH_SUPPORTED<a href="#section-6.1-1.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.1-1.2">
-            <p id="section-6.1-1.2.1">IKE_SA_INTERMEDIATE: ML-KEM exchange<a href="#section-6.1-1.2.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.1-1.3">
-            <p id="section-6.1-1.3.1">First IKE_AUTH: traditional CERT, traditional AUTH, ANOTHER_AUTH_FOLLOWS<a href="#section-6.1-1.3.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.1-1.4">
-            <p id="section-6.1-1.4.1">Second IKE_AUTH: PQC CERT, PQC AUTH<a href="#section-6.1-1.4.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-</section>
-</div>
-<div id="certificate-validation">
-<section id="section-6.2">
-        <h3 id="name-certificate-validation">
-<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-certificate-validation" class="section-name selfRef">Certificate Validation</a>
-        </h3>
-<p id="section-6.2-1">When dual certificate authentication is used, each certificate chain is validated according to the applicable PKIX procedures as defined in <span>[<a href="#RFC7296" class="cite xref">RFC7296</a>]</span>.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.2-2">Both authentication rounds defined in <span>[<a href="#RFC4739" class="cite xref">RFC4739</a>]</span> <span class="bcp14">MUST</span> succeed. Failure to validate either certificate chain or failure to verify either corresponding AUTH payload signature <span class="bcp14">MUST</span> cause the IKE_SA negotiation to fail.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.2-3">Deployments should ensure that the selected traditional and PQC algorithms provide comparable security strength to avoid unintended weakening of the overall authentication assurance.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
-</section>
-</div>
-</section>
-</div>
 <div id="ikev2-fragmentation">
-<section id="section-7">
+<section id="section-6">
       <h2 id="name-ikev2-fragmentation">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-ikev2-fragmentation" class="section-name selfRef">IKEv2 Fragmentation</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-ikev2-fragmentation" class="section-name selfRef">IKEv2 Fragmentation</a>
       </h2>
-<p id="section-7-1">Post-quantum signature algorithms and certificate chains may significantly increase the size of IKE_AUTH messages. Implementations supporting the mechanisms defined in this document <span class="bcp14">MUST</span> support IKEv2 Fragmentation as defined in <span>[<a href="#RFC7383" class="cite xref">RFC7383</a>]</span>.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">Post-quantum signature algorithms and certificate chains may significantly increase the size of IKE_AUTH messages. Implementations supporting the mechanisms defined in this document <span class="bcp14">MUST</span> support IKEv2 Fragmentation as defined in <span>[<a href="#RFC7383" class="cite xref">RFC7383</a>]</span>.<a href="#section-6-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="negotiation">
+<section id="section-7">
+      <h2 id="name-negotiation">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-negotiation" class="section-name selfRef">Negotiation</a>
+      </h2>
+<p id="section-7-1">Note: currently, this section talks mostly about the problems that we'll need to address.
+Eventually, it'll be updated to talk about the actual mechanism, including the bits-on-the-wire format.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">To support brown field upgrades, we will need for an IKE device to be able to support negotiating with devices with only conventional (e.g. RSA) certificates, and with devices with composite certificates (e.g. RSA and ML-DSA).
+In addition, for the network to be entirely post-quantum safe, devices will need to be able to mandate that composite certificates be used.
+Furthermore, it would be cleaner if the device sent its policy upfront to the peer, rather than letting it try to negotiate and failing.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-3">For composite certificates, this is straight-forward. A composite certificate can be listed in the SUPPORTED_AUTH_METHODS list as yet another algorithm.
+A device can decide to list support for both that and RSA, or it could decide to list only support for composite certificates.
+The existing mechanism in IKE will cleanly decide which is appropriate.
+The only remaining issue is one of preference (if we have multiple algorithm OIDs that are acceptable to the peer, which one should we use).
+This is not a security issue; instead, it is a performance issue (preferring composite would allow us to find performance problems earlier).<a href="#section-7-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
@@ -1416,8 +1347,8 @@ HDR, SK {IDi, CERT+, [CERTREQ,]
       <h2 id="name-security-considerations">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-8-1">The hybrid mechanisms defined in this document aim to provide authentication security as long as at least one component signature algorithm remains secure against forgery.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">The security of general PQ/T hybrid authentication is discussed in <span>[<a href="#RFC9794" class="cite xref">RFC9794</a>]</span>. This document relies on mechanisms defined in <span>[<a href="#I-D.ietf-lamps-pq-composite-sigs" class="cite xref">I-D.ietf-lamps-pq-composite-sigs</a>]</span>, <span>[<a href="#RFC7427" class="cite xref">RFC7427</a>]</span>, <span>[<a href="#RFC9593" class="cite xref">RFC9593</a>]</span>, and <span>[<a href="#RFC4739" class="cite xref">RFC4739</a>]</span>, and the security considerations of those specifications need to be taken into account.<a href="#section-8-2" class="pilcrow">¶</a></p>
+<p id="section-8-1">The hybrid mechanism defined in this document aims to provide authentication security as long as at least one component signature algorithm remains secure against forgery.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-2">The security of general PQ/T hybrid authentication is discussed in <span>[<a href="#RFC9794" class="cite xref">RFC9794</a>]</span>. This document relies on mechanisms defined in <span>[<a href="#I-D.ietf-lamps-pq-composite-sigs" class="cite xref">I-D.ietf-lamps-pq-composite-sigs</a>]</span>, <span>[<a href="#RFC7427" class="cite xref">RFC7427</a>]</span>, and <span>[<a href="#RFC9593" class="cite xref">RFC9593</a>]</span>, and the security considerations of those specifications need to be taken into account.<a href="#section-8-2" class="pilcrow">¶</a></p>
 <p id="section-8-3">Traditional signature algorithms such as ECDSA, Ed25519, and Ed448 provide existential unforgeability under chosen-message attack (EUF-CMA), which is sufficient for IKEv2 authentication. When used as the traditional component in a composite construction with ML-DSA, these algorithms contribute to defense-in-depth during the transition to post-quantum cryptography, maintaining IKEv2 authentication security as long as at least one component algorithm remains secure.<a href="#section-8-3" class="pilcrow">¶</a></p>
 <p id="section-8-4">However, composite signature schemes do not in general preserve strong unforgeability (SUF-CMA) once the traditional component algorithm is broken, for example due to the availability of CRQCs. In such cases, a forged traditional signature component can be combined with a valid post-quantum component to produce a composite signature that verifies successfully, violating SUF. This loss of SUF is inherent to the composite construction and does not impact IKEv2, which relies only on the composite signature verification result.<a href="#section-8-4" class="pilcrow">¶</a></p>
 <div id="downgrade-considerations">
@@ -1425,25 +1356,9 @@ HDR, SK {IDi, CERT+, [CERTREQ,]
         <h3 id="name-downgrade-considerations">
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-downgrade-considerations" class="section-name selfRef">Downgrade Considerations</a>
         </h3>
-<p id="section-8.1-1">The AUTH computation in IKEv2 signs the IKE_SA_INIT exchange as specified in Section 2.15 of <span>[<a href="#RFC7296" class="cite xref">RFC7296</a>]</span>. Therefore, negotiation signals exchanged during IKE_SA_INIT (such as <code>SUPPORTED_AUTH_METHODS</code> <span>[<a href="#RFC9593" class="cite xref">RFC9593</a>]</span> or <code>MULTIPLE_AUTH_SUPPORTED</code> <span>[<a href="#RFC4739" class="cite xref">RFC4739</a>]</span>) are cryptographically bound to the authentication exchange and cannot be modified by an active attacker without causing authentication failure.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-1">The AUTH computation in IKEv2 signs the IKE_SA_INIT exchange as specified in Section 2.15 of <span>[<a href="#RFC7296" class="cite xref">RFC7296</a>]</span>. Therefore, negotiation signals exchanged during IKE_SA_INIT (such as <code>SUPPORTED_AUTH_METHODS</code> <span>[<a href="#RFC9593" class="cite xref">RFC9593</a>]</span>) are cryptographically bound to the authentication exchange and cannot be modified by an active attacker without causing authentication failure.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <p id="section-8.1-2">If hybrid authentication is required by local policy, implementations <span class="bcp14">MUST</span> enforce that the negotiated authentication method satisfies that policy.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
-<p id="section-8.1-3">Specifically:<a href="#section-8.1-3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-8.1-4.1">
-            <p id="section-8.1-4.1.1">If composite authentication is required, receipt of a non-composite certificate or non-composite signature algorithm during IKE_AUTH <span class="bcp14">MUST</span> cause the IKE_SA negotiation to fail.<a href="#section-8.1-4.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-8.1-4.2">
-            <p id="section-8.1-4.2.1">If dual certificate authentication is required:<a href="#section-8.1-4.2.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-8.1-4.2.2.1">
-                <p id="section-8.1-4.2.2.1.1">Both authentication rounds defined in <span>[<a href="#RFC4739" class="cite xref">RFC4739</a>]</span> <span class="bcp14">MUST</span> complete successfully.<a href="#section-8.1-4.2.2.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-8.1-4.2.2.2">
-                <p id="section-8.1-4.2.2.2.1">Failure of either authentication round <span class="bcp14">MUST</span> cause the IKE_SA negotiation to fail.<a href="#section-8.1-4.2.2.2.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-</li>
-        </ul>
+<p id="section-8.1-3">Specifically, if composite authentication is required, receipt of a non-composite certificate or non-composite signature algorithm during IKE_AUTH <span class="bcp14">MUST</span> cause the IKE_SA negotiation to fail.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1469,19 +1384,15 @@ HDR, SK {IDi, CERT+, [CERTREQ,]
 <dl class="references">
 <dt id="I-D.ietf-lamps-pq-composite-sigs">[I-D.ietf-lamps-pq-composite-sigs]</dt>
         <dd>
-<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite ML-DSA for use in X.509 Public Key Infrastructure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-pq-composite-sigs-14</span>, <time datetime="2026-01-07" class="refDate">7 January 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-14">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-14</a>&gt;</span>. </dd>
+<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite Module-Lattice-Based Digital Signature Algorithm (ML-DSA) for use in X.509 Public Key Infrastructure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-pq-composite-sigs-16</span>, <time datetime="2026-04-08" class="refDate">8 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-16">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-16</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="PQC-AUTH">[PQC-AUTH]</dt>
         <dd>
-<span class="refTitle">"*** BROKEN REFERENCE ***"</span>. </dd>
+<span class="refAuthor">Reddy.K, T.</span>, <span class="refAuthor">Smyslov, V.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Signature Authentication in the Internet Key Exchange Version 2 (IKEv2) using PQC"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ipsecme-ikev2-pqc-auth-07</span>, <time datetime="2026-04-01" class="refDate">1 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-ipsecme-ikev2-pqc-auth-07">https://datatracker.ietf.org/doc/html/draft-ietf-ipsecme-ikev2-pqc-auth-07</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC4739">[RFC4739]</dt>
-        <dd>
-<span class="refAuthor">Eronen, P.</span> and <span class="refAuthor">J. Korhonen</span>, <span class="refTitle">"Multiple Authentication Exchanges in the Internet Key Exchange (IKEv2) Protocol"</span>, <span class="seriesInfo">RFC 4739</span>, <span class="seriesInfo">DOI 10.17487/RFC4739</span>, <time datetime="2006-11" class="refDate">November 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4739">https://www.rfc-editor.org/rfc/rfc4739</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7296">[RFC7296]</dt>
         <dd>
@@ -1539,8 +1450,8 @@ HDR, SK {IDi, CERT+, [CERTREQ,]
 </div>
 <div id="authors-addresses">
 <section id="appendix-B">
-      <h2 id="name-authors-address">
-<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Tirumaleswar Reddy</span></div>
@@ -1552,6 +1463,14 @@ HDR, SK {IDi, CERT+, [CERTREQ,]
 <div class="email">
 <span>Email:</span>
 <a href="mailto:k.tirumaleswar_reddy@nokia.com" class="email">k.tirumaleswar_reddy@nokia.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Scott Fluhrer</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:sfluhrer@cisco.com" class="email">sfluhrer@cisco.com</a>
 </div>
 </address>
 </section>
