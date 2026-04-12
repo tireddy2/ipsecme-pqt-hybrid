@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-09T01:50:08.037650+00:00",
+  "timestamp": "2026-04-12T02:04:47.942720+00:00",
   "repo": "tireddy2/ipsecme-pqt-hybrid",
   "labels": [
     {
@@ -155,24 +155,26 @@
       "id": "PR_kwDORTz9HM7Q1vzZ",
       "title": "Remove text discussing dual certificates",
       "url": "https://github.com/tireddy2/ipsecme-pqt-hybrid/pull/3",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "tireddy2",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-04-08T14:38:53Z",
-      "updatedAt": "2026-04-08T17:53:53Z",
+      "updatedAt": "2026-04-09T06:14:11Z",
       "baseRepository": "tireddy2/ipsecme-pqt-hybrid",
       "baseRefName": "main",
       "baseRefOid": "050c888a794d810a7530546a530251e88c73394a",
       "headRepository": "tireddy2/ipsecme-pqt-hybrid",
       "headRefName": "tireddy2-patch-2",
       "headRefOid": "3a966ba4a6307af8b84a964f7d9b6558a5fc75bd",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-04-09T06:14:11Z",
+      "mergedAt": "2026-04-09T06:14:11Z",
+      "mergedBy": "tireddy2",
+      "mergeCommit": {
+        "oid": "0858bccbc6aef7cb82e44fef75c1c2eb397f0ab1"
+      },
       "comments": [],
       "reviews": [
         {
