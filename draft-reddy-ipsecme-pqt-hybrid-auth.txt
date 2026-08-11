@@ -4,9 +4,9 @@
 
 IP Security Maintenance and Extensions                          T. Reddy
 Internet-Draft                                                     Nokia
-Intended status: Standards Track                              S. Fluhrer
-Expires: 11 October 2026                                   Cisco Systems
-                                                            9 April 2026
+Intended status: Standards Track                                 G. Wang
+Expires: 12 February 2027                                         Huawei
+                                                          11 August 2026
 
 
       Hybrid Post-Quantum and Traditional Authentication for IKEv2
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 October 2026.
+   This Internet-Draft will expire on 12 February 2027.
 
 Copyright Notice
 
@@ -345,16 +345,16 @@ Table of Contents
               Fluhrer, "Composite Module-Lattice-Based Digital Signature
               Algorithm (ML-DSA) for use in X.509 Public Key
               Infrastructure", Work in Progress, Internet-Draft, draft-
-              ietf-lamps-pq-composite-sigs-16, 8 April 2026,
+              ietf-lamps-pq-composite-sigs-19, 21 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-lamps-
-              pq-composite-sigs-16>.
+              pq-composite-sigs-19>.
 
    [PQC-AUTH] Reddy.K, T., Smyslov, V., and S. Fluhrer, "Signature
               Authentication in the Internet Key Exchange Version 2
               (IKEv2) using PQC", Work in Progress, Internet-Draft,
-              draft-ietf-ipsecme-ikev2-pqc-auth-07, 1 April 2026,
+              draft-ietf-ipsecme-ikev2-pqc-auth-11, 5 August 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-ipsecme-
-              ikev2-pqc-auth-07>.
+              ikev2-pqc-auth-11>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -415,6 +415,6 @@ Authors' Addresses
    Email: k.tirumaleswar_reddy@nokia.com
 
 
-   Scott Fluhrer
-   Cisco Systems
-   Email: sfluhrer@cisco.com
+   Guilin Wang
+   Huawei
+   Email: Wang.Guilin@huawei.com
