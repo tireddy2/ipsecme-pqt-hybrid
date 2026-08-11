@@ -37,6 +37,21 @@ author:
     org: Cisco Systems
     email: sfluhrer@cisco.com
 
+    ins: J. Hu
+    name: Jun HU
+    org: Nokia
+    email: jun.hu@nokia.com
+
+    ins: Y. Morioka
+    name: Yasufumi Morioka
+    org:  NTT
+    email: yasufumi.morioka.dt@nttdocomo.com
+
+    ins: G. Wang
+    name: Guilin Wang
+    org: Huawei
+    email:  Wang.Guilin@huawei.com
+
 normative:
   I-D.ietf-lamps-pq-composite-sigs:
   RFC7296:
