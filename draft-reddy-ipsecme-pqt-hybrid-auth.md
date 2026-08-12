@@ -36,17 +36,17 @@ author:
     name: Scott Fluhrer
     org: Cisco Systems
     email: sfluhrer@cisco.com
-
+ - 
     ins: J. Hu
     name: Jun HU
     org: Nokia
     email: jun.hu@nokia.com
-
+ - 
     ins: Y. Morioka
     name: Yasufumi Morioka
     org:  NTT
     email: yasufumi.morioka.dt@nttdocomo.com
-
+ -
     ins: G. Wang
     name: Guilin Wang
     org: Huawei
