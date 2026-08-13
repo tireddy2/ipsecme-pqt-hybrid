@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-11T01:15:16.191459+00:00",
+  "timestamp": "2026-08-13T01:25:06.576263+00:00",
   "repo": "tireddy2/ipsecme-pqt-hybrid",
   "labels": [
     {
@@ -202,6 +202,111 @@
           "createdAt": "2026-04-08T17:53:53Z",
           "updatedAt": "2026-04-08T17:53:53Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDORTz9HM79Un4l",
+      "title": "Merging: As the first version for merging, added authors of draft-hu-ipsecme-pqt-hybrid-auth as the co-authors of this draft. ",
+      "url": "https://github.com/tireddy2/ipsecme-pqt-hybrid/pull/4",
+      "state": "MERGED",
+      "author": "Wildedifier",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "According to the discussions in IPSECME session in 21/7/2026, and chatting with Jun and Yasufumi after that: all of us do two drafts separately. Namely, we three join you and Scott for composite signatures with composite cert (Type 1), while you and Scott join us for composite signatures with related cert (Type 2). \r\n\r\nNow, just added contributors Jun Hu, Yasufumi Morioka, and Guilin Wang. \r\n\r\nCheers, \r\n\r\nGuilin",
+      "createdAt": "2026-08-11T03:51:29Z",
+      "updatedAt": "2026-08-11T06:17:14Z",
+      "baseRepository": "tireddy2/ipsecme-pqt-hybrid",
+      "baseRefName": "main",
+      "baseRefOid": "0858bccbc6aef7cb82e44fef75c1c2eb397f0ab1",
+      "headRepository": "Wildedifier/ipsecme-pqt-hybrid",
+      "headRefName": "patch-1",
+      "headRefOid": "792f42e66876e07600f59ea29e016e5e78b80a01",
+      "closedAt": "2026-08-11T05:50:05Z",
+      "mergedAt": "2026-08-11T05:50:05Z",
+      "mergedBy": "tireddy2",
+      "mergeCommit": {
+        "oid": "89fc7e22deeb3bcc4d0bbdbedac053016994a9b6"
+      },
+      "comments": [
+        {
+          "author": "Wildedifier",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thanks. ",
+          "createdAt": "2026-08-11T06:17:14Z",
+          "updatedAt": "2026-08-11T06:17:14Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDORTz9HM8AAAABJEHxfw",
+          "commit": {
+            "abbreviatedOid": "792f42e"
+          },
+          "author": "tireddy2",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-11T05:49:43Z",
+          "updatedAt": "2026-08-11T05:49:43Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDORTz9HM797oDR",
+      "title": "Fix Authors list",
+      "url": "https://github.com/tireddy2/ipsecme-pqt-hybrid/pull/5",
+      "state": "MERGED",
+      "author": "tireddy2",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-08-12T07:53:10Z",
+      "updatedAt": "2026-08-12T07:53:35Z",
+      "baseRepository": "tireddy2/ipsecme-pqt-hybrid",
+      "baseRefName": "main",
+      "baseRefOid": "89fc7e22deeb3bcc4d0bbdbedac053016994a9b6",
+      "headRepository": "tireddy2/ipsecme-pqt-hybrid",
+      "headRefName": "tireddy2-patch-3",
+      "headRefOid": "0d14ad3f18e79a293aedc2f0e6bf0979c74f5a74",
+      "closedAt": "2026-08-12T07:53:24Z",
+      "mergedAt": "2026-08-12T07:53:24Z",
+      "mergedBy": "tireddy2",
+      "mergeCommit": {
+        "oid": "17f326d6049c062dfce31f151d6936d8a9f7949f"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDORTz9HM8AAAABJOjeaw",
+          "commit": {
+            "abbreviatedOid": "0d14ad3"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-12T07:53:35Z",
+          "updatedAt": "2026-08-12T07:53:35Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "````suggestion\n -\n````",
+              "createdAt": "2026-08-12T07:53:35Z",
+              "updatedAt": "2026-08-12T07:53:35Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "````suggestion\n -\n````",
+              "createdAt": "2026-08-12T07:53:35Z",
+              "updatedAt": "2026-08-12T07:53:35Z"
+            }
+          ]
         }
       ]
     }
