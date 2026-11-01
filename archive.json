@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-29T03:58:16.019607+00:00",
+  "timestamp": "2026-11-01T03:53:12.478246+00:00",
   "repo": "tireddy2/ipsecme-pqt-hybrid",
   "labels": [
     {
@@ -305,6 +305,59 @@
               "body": "````suggestion\n -\n````",
               "createdAt": "2026-08-12T07:53:35Z",
               "updatedAt": "2026-08-12T07:53:35Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDORTz9HM8AAAABLfe1Iw",
+      "title": "Address comments raised during WG adoption",
+      "url": "https://github.com/tireddy2/ipsecme-pqt-hybrid/pull/6",
+      "state": "OPEN",
+      "author": "tireddy2",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 1: PQ/PQ sentence.\nSection 8.1: new, EUF-CMA and SUF-CMA.\nSection 8.2: new, Key Reuse.\nSection 8.3: stand-alone ML-DSA downgrade.",
+      "createdAt": "2026-10-29T10:15:46Z",
+      "updatedAt": "2026-10-29T10:16:13Z",
+      "baseRepository": "tireddy2/ipsecme-pqt-hybrid",
+      "baseRefName": "main",
+      "baseRefOid": "17f326d6049c062dfce31f151d6936d8a9f7949f",
+      "headRepository": "tireddy2/ipsecme-pqt-hybrid",
+      "headRefName": "tireddy2-patch-4",
+      "headRefOid": "c186b3ee8174beb74d416fb281073e644a6c4987",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDORTz9HM8AAAABU4NY_w",
+          "commit": {
+            "abbreviatedOid": "c186b3e"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-29T10:16:13Z",
+          "updatedAt": "2026-10-29T10:16:13Z",
+          "comments": [
+            {
+              "originalPosition": 44,
+              "body": "````suggestion\n -\n````",
+              "createdAt": "2026-10-29T10:16:13Z",
+              "updatedAt": "2026-10-29T10:16:13Z"
+            },
+            {
+              "originalPosition": 39,
+              "body": "````suggestion\n -\n````",
+              "createdAt": "2026-10-29T10:16:13Z",
+              "updatedAt": "2026-10-29T10:16:13Z"
             }
           ]
         }
